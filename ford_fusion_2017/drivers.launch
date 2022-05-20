@@ -46,7 +46,7 @@ If not using simulated drivers they are activated if the respective mock argumen
   <arg name="mock_lightbar"       value="$(eval 'lightbar' in arg('mock_drivers').split())"/>
 
   <!-- Specific Drivers -->
-  <arg name="drivers" default="gstreamer_camera ouster_lidar inertiallabs_gnss dataspeed_can dataspeed_controller"
+  <arg name="drivers" default="gstreamer_camera ouster_lidar inertiallabs_gnss dataspeed_can dataspeed_controller continental_radar"
     doc="Desired real drivers to launch specified by package name. Mock drivers will take precedence."/>
 
   <arg name="gstreamer_camera"      value="$(eval ('gstreamer_camera' in arg('drivers').split()) and not arg('mock_camera'))"/>
@@ -54,6 +54,7 @@ If not using simulated drivers they are activated if the respective mock argumen
   <arg name="inertiallabs_gnss"     value="$(eval ('inertiallabs_gnss' in arg('drivers').split()) and not arg('mock_gnss'))"/>
   <arg name="dataspeed_can"         value="$(eval ('dataspeed_can' in arg('drivers').split()) and not arg('mock_can'))"/>
   <arg name="dataspeed_controller"  value="$(eval ('dataspeed_controller' in arg('drivers').split()) and not arg('mock_controller'))"/>
+  <arg name="continental_radar"  value="$(eval ('continental_radar' in arg('drivers').split()) and not arg('mock_radar'))"/>
 
   <include if="$(arg gstreamer_camera)" file="$(find gscam_driver)/launch/left_imx390.launch">
   </include>
@@ -76,6 +77,9 @@ If not using simulated drivers they are activated if the respective mock argumen
   </include>
 
   <include if="$(arg dataspeed_controller)" file="$(find dataspeed_ulc_can)/launch/ulc.launch">
+  </include>
+
+  <include if="$(arg continental_radar)" file="$(find ars_40X)/launch/ars_40X.launch">
   </include>
 
 </launch>

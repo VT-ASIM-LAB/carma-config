@@ -133,7 +133,7 @@ services:
     network_mode: host
     privileged: true
     devices:
-      - /dev/bus/usb/005/004:/dev/bus/usb/005/004
+      - /dev/bus/usb:/dev/bus/usb
     volumes_from:
       - container:carma-config:ro
     environment:
@@ -150,7 +150,7 @@ services:
     network_mode: host
     privileged: true
     devices:
-      - /dev/bus/usb/005/004:/dev/bus/usb/005/004
+      - /dev/bus/usb:/dev/bus/usb
     volumes_from:
       - container:carma-config:ro
     environment:
@@ -160,6 +160,23 @@ services:
       - /opt/carma/.ros:/home/carma/.ros
       - /opt/carma/vehicle/calibration:/opt/carma/vehicle/calibration
     command: bash -c '. ./devel/setup.bash && export ROS_NAMESPACE=$${CARMA_INTR_NS} && wait-for-it.sh localhost:11311 -- roslaunch /opt/carma/vehicle/config/drivers.launch drivers:=dataspeed_controller'
+
+  continental-radar-driver:
+    image: usdotfhwastoldev/carma-continental-radar-driver:develop
+    container_name: continental-radar-driver
+    network_mode: host
+    privileged: true
+    devices:
+      - /dev/bus/usb:/dev/bus/usb
+    volumes_from:
+      - container:carma-config:ro
+    environment:
+      - ROS_IP=127.0.0.1
+    volumes:
+      - /opt/carma/logs:/opt/carma/logs
+      - /opt/carma/.ros:/home/carma/.ros
+      - /opt/carma/vehicle/calibration:/opt/carma/vehicle/calibration
+    command: bash -c '. ./devel/setup.bash && export ROS_NAMESPACE=$${CARMA_INTR_NS} && wait-for-it.sh localhost:11311 -- roslaunch /opt/carma/vehicle/config/drivers.launch drivers:=continental_radar'
 
   cohda-dsrc-driver:
     image: usdotfhwastoldev/carma-cohda-dsrc-driver:develop

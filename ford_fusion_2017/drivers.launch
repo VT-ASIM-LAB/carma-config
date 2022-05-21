@@ -54,7 +54,7 @@ If not using simulated drivers they are activated if the respective mock argumen
   <arg name="inertiallabs_gnss"     value="$(eval ('inertiallabs_gnss' in arg('drivers').split()) and not arg('mock_gnss'))"/>
   <arg name="dataspeed_can"         value="$(eval ('dataspeed_can' in arg('drivers').split()) and not arg('mock_can'))"/>
   <arg name="dataspeed_controller"  value="$(eval ('dataspeed_controller' in arg('drivers').split()) and not arg('mock_controller'))"/>
-  <arg name="continental_radar"  value="$(eval ('continental_radar' in arg('drivers').split()) and not arg('mock_radar'))"/>
+  <arg name="continental_radar"     value="$(eval ('continental_radar' in arg('drivers').split()) and not arg('mock_radar'))"/>
 
   <include if="$(arg gstreamer_camera)" file="$(find gscam_driver)/launch/left_imx390.launch">
   </include>

@@ -22,8 +22,11 @@ from launch.substitutions import EnvironmentVariable
 from launch.substitutions import PythonExpression
 from launch.conditions import IfCondition
 from launch.actions import GroupAction
+from launch.actions import Shutdown
 from launch_ros.actions import PushRosNamespace
+from launch_ros.actions import Node
 from carma_ros2_utils.launch.get_log_level import GetLogLevel
+import uuid
 
 def generate_launch_description():
     """
@@ -47,6 +50,20 @@ def generate_launch_description():
     drivers = LaunchConfiguration('drivers')
     declare_drivers_arg = DeclareLaunchArgument(
         name = 'drivers', default_value = 'dsrc_driver', description = "Desired drivers to launch specified by package name."
+    )
+
+    # Launch shutdown node which will ensure the launch file gets closed on system shutdown even if in a separate container
+    driver_shutdown_group = GroupAction(
+        actions=[
+            PushRosNamespace(EnvironmentVariable('CARMA_INTR_NS', default_value='hardware_interface')),
+            Node (
+                package='driver_shutdown_ros2',
+                executable='driver_shutdown_ros2_node_exec',
+                name=[ 'driver_shutdown_', uuid.uuid4().hex ], # No clear way to make anonymous nodes in ros2, so for now we will generate a uuid for now
+                on_exit=Shutdown(),
+                arguments=['--ros-args', '--log-level', GetLogLevel('driver_shutdown_ros2', env_log_levels)]
+            )
+        ]
     )
 
     dsrc_group = GroupAction(

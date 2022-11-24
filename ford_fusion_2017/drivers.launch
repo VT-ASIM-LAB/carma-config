@@ -65,9 +65,10 @@ If not using simulated drivers they are activated if the respective mock argumen
   <include if="$(arg lucid_camera)" file="$(find arena_camera)/launch/lucid_single.launch">
   </include>
   
-  <include if="$(arg ouster_lidar)" file="$(find ouster_ros)/ouster.launch">
+  <include if="$(arg ouster_lidar)" file="$(find ouster_ros)/launch/sensor.launch">
     <arg name="sensor_hostname" value="10.5.5.53"/>
     <arg name="udp_dest" value="10.5.5.1"/>
+    <arg name="timestamp_mode" value="TIME_FROM_ROS_TIME"/>
     <arg name="metadata" value="/opt/carma/vehicle/calibration/ouster/OS1-64U.json"/>
     <arg name="viz" value="false"/>
   </include>

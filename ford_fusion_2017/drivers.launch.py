@@ -1,3 +1,4 @@
+_wrapper
 # Copyright (C) 2022 LEIDOS.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -83,5 +84,6 @@ def generate_launch_description():
         declare_drivers_arg,
         declare_vehicle_calibration_dir_arg,
         declare_vehicle_config_dir_arg,
+        driver_shutdown_group,
         dsrc_group
     ])

@@ -27,6 +27,7 @@
 	<link name="ned_heading" />
 	<link name="velodyne" />
 	<link name="os_sensor" />
+	<link name="radar" />
 	<!-- <link name="os_imu" />
 	<link name="os_lidar" /> -->
 	<!-- <link name="camera_fl" />
@@ -91,6 +92,13 @@
 		<parent link="base_link" />
 		<child link="os_sensor" />
 		<origin xyz="1.19 0 2.03" rpy="0 0 0" />
+	</joint>
+
+	<!-- Continental Radar -->
+	<joint name="base_link_to_radar" type="fixed">
+		<parent link="base_link" />
+		<child link="radar" />
+		<origin xyz="4.235 0 0.495" rpy="0 0 0" />
 	</joint>
 
 	<!-- <joint name="ouster_to_imu" type="fixed" >

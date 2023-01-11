@@ -8,8 +8,8 @@ environment:
     ros__parameters:
       subsystem_namespace: /environment
       required_subsystem_nodes: ['']
-      unmanaged_required_nodes:
-        - /os_cloud_node
+      unmanaged_required_nodes: ['']
+#        - /hardware_interface/dsrc_driver_node
       full_subsystem_required: true
 
 hardware_interface:
@@ -25,8 +25,8 @@ message:
     ros__parameters:
       subsystem_namespace: /message
       required_subsystem_nodes: ['']
-      unmanaged_required_nodes: 
-        - /hardware_interface/dsrc_driver_node
+      unmanaged_required_nodes: ['']
+#        - /hardware_interface/dsrc_driver_node
       full_subsystem_required: true
 
 guidance:
@@ -49,9 +49,21 @@ guidance:
         - /guidance/plugins/sci_strategic_plugin
         - /guidance/plugins/stop_controlled_intersection_tactical_plugin
         - /guidance/plugins/platoon_control_ihp
-        - /guidance/plugins/platoon_strategic_ihp
-        - /guidance/plugins/platooning_tactical_plugin
+        - /guidance/plugins/platoon_strategic_ihp_node
+        - /guidance/plugins/platooning_tactical_plugin_node
         - /guidance/plugins/yield_plugin
+        ros2_initial_plugins:
+        - /guidance/plugins/inlanecruising_plugin          
+        - /guidance/plugins/platoon_strategic_ihp_node
+        - /guidance/plugins/stop_and_wait_plugin
+        - /guidance/plugins/route_following_plugin
+        - /guidance/plugins/platooning_tactical_plugin_node
+        - /guidance/plugins/cooperative_lanechange
+        - /guidance/plugins/light_controlled_intersection_tactical_plugin
+        - /guidance/plugins/sci_strategic_plugin
+        - /guidance/plugins/stop_controlled_intersection_tactical_plugin
+        - /guidance/plugins/yield_plugin
+        - /guidance/plugins/pure_pursuit_wrapper
 
 localization:
   localization_controller:

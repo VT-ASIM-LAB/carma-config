@@ -237,7 +237,7 @@
         0,
         1
     ],
-    "initialization_id": 7109762,
+    "initialization_id": 7109755,
     "json_calibration_version": 4,
     "lidar_mode": "1024x10",
     "lidar_origin_to_beam_origin_mm": 15.806,
@@ -264,6 +264,6 @@
     "prod_pn": "840-102145-D",
     "prod_sn": "122130000409",
     "status": "RUNNING",
-    "udp_port_imu": 53583,
-    "udp_port_lidar": 50644
+    "udp_port_imu": 46074,
+    "udp_port_lidar": 34525
 }

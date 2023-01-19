@@ -26,7 +26,7 @@ services:
       - /opt/carma/.ros:/home/carma/.ros
       - /opt/carma/logs:/opt/carma/logs
     environment:
-      - ROS_IP=127.0.0.1
+      - ROS_IP=192.168.1.1
     restart: always
     command: roscore
 
@@ -45,7 +45,7 @@ services:
       - /opt/carma/maps:/opt/carma/maps
       - /opt/carma/routes:/opt/carma/routes
     environment:
-      - ROS_IP=127.0.0.1
+      - ROS_IP=192.168.1.1
       - NVIDIA_VISIBLE_DEVICES=all
     command: bash -c 'wait-for-it.sh localhost:11311 -- roslaunch /opt/carma/vehicle/config/carma_docker.launch'
 

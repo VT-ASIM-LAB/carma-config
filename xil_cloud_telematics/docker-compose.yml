@@ -144,6 +144,25 @@ services:
       - /opt/carma/yolo:/opt/carma/yolo
       - ./ns3_adapter/adapter_1/parameters.yaml:/opt/carma/install/ns3_adapter/share/ns3_adapter/config/parameters.yaml
     command: bash -c "wait-for-it.sh 172.3.0.2:11311 -- roslaunch ns3_adapter ns3_adapter.launch role_id:='carma_1' remap_ns:=/hardware_interface/comms"
+
+  carma-vehicle-nats-bridge_1:
+    image: usdotfhwastoldev/carma_vehicle_nats_bridge:develop
+    logging:
+        options:
+          max-size: "10m"
+          max-file: "1"
+    networks:
+        carma_net_1:
+          ipv4_address: 172.3.0.8
+    container_name: carma_vehicle_bridge_1
+    volumes:
+      - /opt/carma/vehicle/calibration:/opt/carma/vehicle/calibration
+    env_file:
+      - /opt/carma/vehicle/calibration/telematics/telematics.env
+    environment:
+      - NATS_SERVER_IP_PORT=${NATS_SERVER_IP_PORT} # This variable needs to be explictly defined before bringing the container up. NATS_SERVER_IP_PORT referes to the IP:Port of the cloud instance running the telematic server.
+    command:  bash -c 'source /ws/install/setup.bash && ros2 launch ros2_nats_bridge ros2_nats_bridge_launch.py'
+
 #################
 # carma_2 vehicle
 
@@ -447,6 +466,26 @@ services:
   #     --scenario MyScenario_1
   #     --host 172.2.0.2"
 
+
+  carma-streets-nats-bridge_1:
+    image: usdotfhwastoldev/carma_street_nats_bridge:develop
+    logging:
+        options:
+          max-size: "10m"
+          max-file: "1"
+    networks:
+      carma_streets_net_1:
+        ipv4_address: 172.4.0.17
+    container_name: carma_streets_nats_bridge_1
+    restart: always
+    volumes:
+      - /opt/carma/vehicle/calibration:/opt/carma/vehicle/calibration
+    env_file:
+      - /opt/carma/vehicle/calibration/telematics/telematics.env
+    environment:
+      - NATS_SERVER_IP_PORT=${NATS_SERVER_IP_PORT} # This variable needs to be explictly defined before bringing the container up. NATS_SERVER_IP_PORT referes to the IP:Port of the cloud instance running the telematic server.
+    depends_on:
+      - kafka
 
 networks:
   carma_sim_net:
